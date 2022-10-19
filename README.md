@@ -1,4 +1,4 @@
-<h1 align="center">Projeto Formulario Card</h1>
+<h1 align="center">Projeto Payment Card</h1>
 
 <p align="center">
 Projeto para simular um cadastro de cartão de credito
