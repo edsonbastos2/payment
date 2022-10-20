@@ -7,6 +7,9 @@ const ccLogo = document.querySelector('.cc-logo span:nth-child(2) img')
 const securityCode = document.querySelector('#security-code')
 const expirationDate = document.querySelector('#expiration-date')
 const cardNumber = document.querySelector('#card-number')
+const form = document.querySelector('#form')
+const cardHolder = document.querySelector('#card-holder')
+const ccHolder = document.querySelector('.cc-holder .value')
 
 function setCardType(type = 'default') {
     const colors = {
@@ -20,7 +23,6 @@ function setCardType(type = 'default') {
     ccLogo.setAttribute('src',`cc-${type}.svg`)
 }
 
-setCardType()
 
 const securityCodePattern = {
     mask: '0000',
@@ -75,3 +77,48 @@ const cardNumberPattern = {
 const securityMask = IMask(securityCode, securityCodePattern)
 const experirationDateMask = IMask(expirationDate, experirationDatePattern)
 const carNumberMask = IMask(cardNumber, cardNumberPattern)
+
+const btn = document.querySelector('#btn')
+
+btn.addEventListener('click', () => {
+    console.log('clicou');
+})
+
+form.addEventListener('submit', (event) => {
+    event.preventDefault()
+    console.log('evento de form');
+})
+
+cardHolder.addEventListener('input', () => {
+    ccHolder.innerText = !cardHolder.value.length ? 'FULANO DA SILVA' : cardHolder.value
+})
+
+securityMask.on('accept', () => {
+
+    updateCodeSecurity(securityMask.value)
+})
+
+function updateCodeSecurity(code) {
+    const ccSecurity = document.querySelector('.cc-security .value')
+    ccSecurity.innerText = !code.length ? '123' : code
+}
+
+carNumberMask.on('accept', () => {
+    const cardType = carNumberMask.masked.currentMask.cardType
+    setCardType(cardType)
+    updateCardNumber(carNumberMask.value)
+})
+
+function updateCardNumber(number) {
+    const ccNumber = document.querySelector('.cc-number')
+    ccNumber.innerText = !number.length ? '1234 5678 9012 3456' : number
+}
+
+experirationDateMask.on('accept', () => {
+    updateExperiranteDate(experirationDateMask.value)
+})
+
+function updateExperiranteDate(date) {
+    const ccExpiration = document.querySelector('.cc-expiration .value')
+    ccExpiration.innerText = !date.length ? "02/32" : date
+}
